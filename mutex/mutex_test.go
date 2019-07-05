@@ -3,6 +3,7 @@ package main
 import (
 	"testing"
 	"runtime"
+	"sync"
 )
 
 func BenchmarkIncrementMutex(b *testing.B) {
@@ -30,18 +31,30 @@ func BenchmarkIncrementAtomic(b *testing.B) {
 func BenchmarkConcurrentMutex(b *testing.B) {
 	bs := &Bla{}
 	for i := 0; i < b.N; i++ {
+		var wg sync.WaitGroup
 		for j := 0; j < runtime.NumCPU(); j++ {
-			go bs.IncrementMutex()
+			wg.Add(1)
+			go func() {
+				bs.IncrementMutex()
+				wg.Done()
+			}()
 		}
+		wg.Wait()
 	}
 }
 
 func BenchmarkConcurrentMutexNoDefer(b *testing.B) {
 	bs := &Bla{}
 	for i := 0; i < b.N; i++ {
+		var wg sync.WaitGroup
 		for j := 0; j < runtime.NumCPU(); j++ {
-			go bs.IncrementMutexNoDefer()
+			wg.Add(1)
+			go func() {
+				bs.IncrementMutexNoDefer()
+				wg.Done()
+			}()
 		}
+		wg.Wait()
 	}
 }
 
@@ -49,9 +62,15 @@ func BenchmarkConcurrentMutexNoDefer(b *testing.B) {
 func BenchmarkConcurrentAtomic(b *testing.B) {
 	bs := &Bla{}
 	for i := 0; i < b.N; i++ {
+		var wg sync.WaitGroup
 		for j := 0; j < runtime.NumCPU(); j++ {
-			go bs.IncrementAtomic()
+			wg.Add(1)
+			go func() {
+				bs.IncrementAtomic()
+				wg.Done()
+			}()
 		}
+		wg.Wait()
 	}
 }
 
