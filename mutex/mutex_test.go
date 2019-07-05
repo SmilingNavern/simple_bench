@@ -44,3 +44,14 @@ func BenchmarkConcurrentMutexNoDefer(b *testing.B) {
 		}
 	}
 }
+
+
+func BenchmarkConcurrentAtomic(b *testing.B) {
+	bs := &Bla{}
+	for i := 0; i < b.N; i++ {
+		for j := 0; j < runtime.NumCPU(); j++ {
+			go bs.IncrementAtomic()
+		}
+	}
+}
+
