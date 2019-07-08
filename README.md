@@ -16,3 +16,15 @@ BenchmarkConcurrentMutexNoDefer-8        1000000              2095 ns/op
 BenchmarkConcurrentAtomic-8              1000000              1995 ns/op
 PASS
 ```
+
+
+# Prepend
+
+```
+go test -bench=.
+goos: linux
+goarch: amd64
+BenchmarkPrepend-8                500000              3145 ns/op
+BenchmarkSmartPrepend-8           300000              4280 ns/op
+PASS
+```
