@@ -15,7 +15,7 @@ func BenchmarkPrepend(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
-		newbla := make([]int, len(bla))
+		newbla := make([]int, len(bla), cap(bla))
 		copy(newbla, bla)
 		b.StartTimer()
 		newbla = append([]int{10}, newbla...)
@@ -32,7 +32,7 @@ func BenchmarkSmartPrepend(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
-		newbla := make([]int, len(bla))
+		newbla := make([]int, len(bla), cap(bla))
 		copy(newbla, bla)
 		b.StartTimer()
 		newbla = append(newbla[:1], newbla...)

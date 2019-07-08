@@ -21,10 +21,10 @@ PASS
 # Prepend
 
 ```
-go test -bench=.
+ go test -bench=.
 goos: linux
 goarch: amd64
-BenchmarkPrepend-8                500000              3145 ns/op
-BenchmarkSmartPrepend-8           300000              4280 ns/op
+BenchmarkPrepend-8                300000              4484 ns/op
+BenchmarkSmartPrepend-8          2000000               838 ns/op
 PASS
 ```
